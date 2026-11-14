@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage — Jo-Kilimani</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #1B5E45;
+      --cream: #F7F3EE;
+      --sand:  #E8DDD0;
+      --text:  #1A1A1A;
+      --muted: #6B6B6B;
+      --red:   #B71C1C;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+    .logo {
+      font-family: Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--green);
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 36px;
+      max-width: 560px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 6px; }
+    .subtitle { color: var(--muted); font-size: .9rem; margin-bottom: 32px; }
+    .section { margin-bottom: 28px; }
+    .section h2 { font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
+    label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: 6px; }
+    .hint { font-weight: 400; color: var(--muted); font-size: .8rem; margin-left: 6px; }
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--sand);
+      border-radius: 8px;
+      font-size: .95rem;
+      background: var(--cream);
+      color: var(--text);
+    }
+    input:focus { outline: none; border-color: var(--green); background: #fff; }
+    .rate-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .flatpickr-input { cursor: pointer; }
+    .blocked-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; min-height: 28px; }
+    .tag {
+      background: var(--sand);
+      border-radius: 20px;
+      padding: 3px 10px 3px 12px;
+      font-size: .8125rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tag button { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1rem; line-height: 1; padding: 0; }
+    .tag button:hover { color: var(--red); }
+    .save-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity .15s;
+    }
+    .save-btn:hover   { opacity: .9; }
+    .save-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .status {
+      margin-top: 14px;
+      padding: 11px 14px;
+      border-radius: 8px;
+      font-size: .875rem;
+      display: none;
+    }
+    .status--ok  { background: #E8F5E9; color: #1B5E20; display: block; }
+    .status--err { background: #FFF0F0; color: var(--red); display: block; }
+    .view-link { margin-top: 20px; font-size: .875rem; color: var(--muted); }
+    .view-link a { color: var(--green); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="logo">Jo-Kilimani</div>
+
+  <div class="card">
+    <h1>Manage your site</h1>
+    <p class="subtitle">Update your nightly rate and block unavailable dates. Changes go live in ~2 minutes.</p>
+
+    <div class="section">
+      <h2>Pricing</h2>
+      <div class="rate-row">
+        <div>
+          <label for="nightly_rate">Nightly rate <span class="hint">direct booking</span></label>
+          <input type="number" id="nightly_rate" value="70" min="1" placeholder="e.g. 89" />
+        </div>
+        <div>
+          <label for="currency">Currency</label>
+          <select id="currency" style="width:100%;padding:11px 14px;border:1.5px solid var(--sand);border-radius:8px;font-size:.95rem;background:var(--cream);color:var(--text);">
+            <option value="usd" selected>USD ($)</option>
+            <option value="kes" >KES (KSh)</option>
+            <option value="gbp" >GBP (£)</option>
+            <option value="eur" >EUR (€)</option>
+            <option value="ugx" >UGX</option>
+            <option value="tzs" >TZS (TSh)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Availability</h2>
+      <label for="date-picker">Block unavailable dates <span class="hint">click dates to toggle</span></label>
+      <input type="text" id="date-picker" placeholder="Click to select dates…" readonly />
+      <div class="blocked-tags" id="blocked-tags"></div>
+    </div>
+
+    <button class="save-btn" id="save-btn">Save &amp; rebuild site</button>
+    <div class="status" id="status"></div>
+
+    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-kilimani-dpcz3f/">View your site</a></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+  (function () {
+    var SLUG         = 'jo-kilimani';
+    var OUTPUT_SLUG  = 'jo-kilimani-dpcz3f';
+    var MANAGE_TOKEN = 'kxx5p8bqdxyv';
+    var API          = 'https://kaributrove.com/manage';
+
+    // Seed blocked dates from host config
+    var blocked = [];
+
+    function renderTags() {
+      var container = document.getElementById('blocked-tags');
+      container.innerHTML = '';
+      blocked.sort().forEach(function (d) {
+        var tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.innerHTML = d + '<button title="Remove" data-date="' + d + '">×</button>';
+        tag.querySelector('button').addEventListener('click', function () {
+          blocked = blocked.filter(function (x) { return x !== d; });
+          fp.setDate(blocked, false);
+          renderTags();
+        });
+        container.appendChild(tag);
+      });
+    }
+
+    var fp = flatpickr('#date-picker', {
+      mode:       'multiple',
+      minDate:    'today',
+      dateFormat: 'Y-m-d',
+      defaultDate: blocked,
+      disableMobile: false,
+      onChange: function (dates) {
+        blocked = dates.map(function (d) { return d.toISOString().split('T')[0]; });
+        renderTags();
+      },
+    });
+
+    renderTags();
+
+    document.getElementById('save-btn').addEventListener('click', async function () {
+      var btn    = this;
+      var status = document.getElementById('status');
+      var rate   = parseFloat(document.getElementById('nightly_rate').value) || null;
+      var curr   = document.getElementById('currency').value;
+
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      status.className = 'status';
+      status.style.display = 'none';
+
+      try {
+        var res = await fetch(API, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug:          SLUG,
+            output_slug:   OUTPUT_SLUG,
+            manage_token:  MANAGE_TOKEN,
+            nightly_rate:  rate,
+            currency:      curr,
+            blocked_dates: blocked,
+          }),
+        });
+        var json = await res.json();
+        if (json.ok) {
+          status.textContent  = 'Saved! Your site is rebuilding — changes live in ~2 minutes.';
+          status.className    = 'status status--ok';
+        } else {
+          status.textContent = json.error || 'Something went wrong. Please try again.';
+          status.className   = 'status status--err';
+        }
+      } catch (e) {
+        status.textContent = 'Could not connect. Please try again.';
+        status.className   = 'status status--err';
+      }
+
+      btn.disabled    = false;
+      btn.textContent = 'Save & rebuild site';
+    });
+  })();
+  </script>
+</body>
+</html>
