@@ -104,7 +104,7 @@
       <div class="rate-row">
         <div>
           <label for="nightly_rate">Nightly rate <span class="hint">direct booking</span></label>
-          <input type="number" id="nightly_rate" value="70" min="1" placeholder="e.g. 89" />
+          <input type="number" id="nightly_rate" value="50" min="1" placeholder="e.g. 89" />
         </div>
         <div>
           <label for="currency">Currency</label>
@@ -142,7 +142,7 @@
     var API          = 'https://kaributrove.com/manage';
 
     // Seed blocked dates from host config
-    var blocked = [];
+    var blocked = ["2026-11-15","2026-11-16","2026-11-24","2026-11-25","2026-11-28","2026-12-07","2026-12-08","2026-12-09","2026-12-10","2026-12-18","2026-12-19","2026-12-24"];
 
     function renderTags() {
       var container = document.getElementById('blocked-tags');
