@@ -104,7 +104,7 @@
       <div class="rate-row">
         <div>
           <label for="nightly_rate">Nightly rate <span class="hint">direct booking</span></label>
-          <input type="number" id="nightly_rate" value="" min="1" placeholder="e.g. 89" />
+          <input type="number" id="nightly_rate" value="90" min="1" placeholder="e.g. 89" />
         </div>
         <div>
           <label for="currency">Currency</label>
@@ -129,7 +129,7 @@
 
     <button class="save-btn" id="save-btn">Save &amp; rebuild site</button>
 
-    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-austin-pr6t7m/">View your site</a></p>
+    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-austin-s4myhy/">View your site</a></p>
   </div>
 
   <!-- Rebuilding overlay — hidden until save -->
@@ -145,8 +145,8 @@
   <script>
   (function () {
     var SLUG         = 'jo-austin';
-    var OUTPUT_SLUG  = 'jo-austin-pr6t7m';
-    var MANAGE_TOKEN = 'sqesjsa67qje';
+    var OUTPUT_SLUG  = 'jo-austin-s4myhy';
+    var MANAGE_TOKEN = '2gf6brwsrt2k';
     var API          = 'https://kaributrove.com/manage';
 
     // Seed blocked dates from host config
@@ -226,7 +226,7 @@
 
     async function pollUntilLive() {
       var STATUS_API = 'https://kaributrove.com/start/status';
-      var SITE_URL   = 'https://kaributrove.github.io/pages/h/jo-austin-pr6t7m/';
+      var SITE_URL   = 'https://kaributrove.github.io/pages/h/jo-austin-s4myhy/';
       var maxAttempts = 18; // 18 × 10s = 3 min
 
       for (var i = 0; i < maxAttempts; i++) {
