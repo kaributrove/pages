@@ -718,6 +718,7 @@ p  { color: var(--text-muted); line-height: 1.7; }
       <aside id="booking" class="booking-widget"
         data-api="https://kaributrove.com/book"
         data-rate="48"
+        data-airbnb-rate="60"
         data-currency="usd"
         data-max-guests="2"
         data-title="1BR Rooftop Luxury Apartment — Kilimani, Nairobi | Alina Harbour">
@@ -961,6 +962,7 @@ p  { color: var(--text-muted); line-height: 1.7; }
     if (!widget) return;
 
     var RATE        = parseFloat(widget.dataset.rate) || 0;
+    var AIRBNB_RATE = parseFloat(widget.dataset.airbnbRate) || 0;
     var CURRENCY    = (widget.dataset.currency || 'usd').toLowerCase();
     var MAX_GUESTS  = parseInt(widget.dataset.maxGuests) || 8;
     var TITLE       = widget.dataset.title || 'Apartment';
@@ -1076,11 +1078,11 @@ p  { color: var(--text-muted); line-height: 1.7; }
         .then(function (p) {
           if (priceLoading) priceLoading.style.display = 'none';
 
-          var airbnbTotal  = p.airbnb_total  || (RATE * nights);
-          var directTotal  = p.direct_total  || Math.round(airbnbTotal * 0.9);
+          var airbnbTotal  = p.airbnb_total  || ((AIRBNB_RATE || RATE) * nights);
+          var directTotal  = p.direct_total  || (RATE * nights);
           var savings      = airbnbTotal - directTotal;
           var savingsPct   = Math.round((savings / airbnbTotal) * 100);
-          var airbnbNightly = p.airbnb_nightly || RATE;
+          var airbnbNightly = p.airbnb_nightly || AIRBNB_RATE || RATE;
 
           if (bd) {
             document.getElementById('bd-label').textContent        = 'Airbnb (' + nights + ' night' + (nights!==1?'s':'') + ')';
@@ -1099,13 +1101,15 @@ p  { color: var(--text-muted); line-height: 1.7; }
           if (priceLoading) priceLoading.style.display = 'none';
           // Fall back to configured rate if available
           if (RATE && bd) {
-            var total = Math.round(RATE * nights * 0.9);
-            var airbnbFallback = RATE * nights;
+            var airbnbFallback = (AIRBNB_RATE || RATE) * nights;
+            var total = RATE * nights;
+            var fallbackSavings = airbnbFallback - total;
+            var fallbackPct = AIRBNB_RATE ? Math.round((fallbackSavings / airbnbFallback) * 100) : 0;
             document.getElementById('bd-label').textContent        = 'Airbnb (' + nights + ' night' + (nights!==1?'s':'') + ')';
             document.getElementById('bd-airbnb-total').textContent = SYM + airbnbFallback.toLocaleString();
             document.getElementById('bd-direct-label').textContent = 'Direct booking';
             document.getElementById('bd-direct-total').textContent = SYM + total.toLocaleString();
-            document.getElementById('bd-savings').textContent      = SYM + (airbnbFallback - total).toLocaleString() + ' (~10%)';
+            document.getElementById('bd-savings').textContent      = SYM + fallbackSavings.toLocaleString() + (fallbackPct ? ' (' + fallbackPct + '%)' : '');
             document.getElementById('bd-total').textContent        = SYM + total.toLocaleString();
             bd.style.display = '';
             widget.dataset.directTotal = total;
