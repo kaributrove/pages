@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manage — Jo-Austin</title>
+  <title>Manage — Jo-Kilimani</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -93,7 +93,7 @@
   </style>
 </head>
 <body>
-  <div class="logo">Jo-Austin</div>
+  <div class="logo">Jo-Kilimani</div>
 
   <div class="card">
     <h1>Manage your site</h1>
@@ -104,7 +104,7 @@
       <div class="rate-row">
         <div>
           <label for="nightly_rate">Nightly rate <span class="hint">direct booking</span></label>
-          <input type="number" id="nightly_rate" value="60" min="1" placeholder="e.g. 89" />
+          <input type="number" id="nightly_rate" value="" min="1" placeholder="e.g. 89" />
         </div>
         <div>
           <label for="currency">Currency</label>
@@ -129,7 +129,7 @@
 
     <button class="save-btn" id="save-btn">Save &amp; rebuild site</button>
 
-    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-austin-cfenkr/">View your site</a></p>
+    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-kilimani-un7pn7/">View your site</a></p>
   </div>
 
   <!-- Rebuilding overlay — hidden until save -->
@@ -144,9 +144,9 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
   (function () {
-    var SLUG         = 'jo-austin';
-    var OUTPUT_SLUG  = 'jo-austin-cfenkr';
-    var MANAGE_TOKEN = 'cjbu7cexmtc6';
+    var SLUG         = 'jo-kilimani';
+    var OUTPUT_SLUG  = 'jo-kilimani-un7pn7';
+    var MANAGE_TOKEN = 'btnj84s2r5c9';
     var API          = 'https://kaributrove.com/manage';
 
     // Seed blocked dates from host config
@@ -226,7 +226,7 @@
 
     async function pollUntilLive() {
       var STATUS_API = 'https://kaributrove.com/start/status';
-      var SITE_URL   = 'https://kaributrove.github.io/pages/h/jo-austin-cfenkr/';
+      var SITE_URL   = 'https://kaributrove.github.io/pages/h/jo-kilimani-un7pn7/';
       var maxAttempts = 18; // 18 × 10s = 3 min
 
       for (var i = 0; i < maxAttempts; i++) {
