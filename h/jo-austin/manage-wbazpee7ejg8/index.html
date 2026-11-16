@@ -129,7 +129,7 @@
 
     <button class="save-btn" id="save-btn">Save &amp; rebuild site</button>
 
-    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-austin-ee7x8j/">View your site</a></p>
+    <p class="view-link">← <a href="https://kaributrove.github.io/pages/h/jo-austin/">View your site</a></p>
     <p class="view-link" style="margin-top:8px;">
       <a href="/manage-login?slug=jo-austin" style="color:var(--muted);font-size:.8rem;">Request a new login link</a>
     </p>
@@ -159,7 +159,7 @@
     var SESSION_TOKEN = sessionStorage.getItem('kt_sess') || null;
 
     var SLUG         = 'jo-austin';
-    var OUTPUT_SLUG  = 'jo-austin-ee7x8j';
+    var OUTPUT_SLUG  = 'jo-austin';
     var MANAGE_TOKEN = 'wbazpee7ejg8';
     var API          = 'https://kaributrove.com/manage';
 
@@ -241,7 +241,7 @@
 
     async function pollUntilLive() {
       var STATUS_API = 'https://kaributrove.com/start/status';
-      var SITE_URL   = 'https://kaributrove.github.io/pages/h/jo-austin-ee7x8j/';
+      var SITE_URL   = 'https://kaributrove.github.io/pages/h/jo-austin/';
       var maxAttempts = 18; // 18 × 10s = 3 min
 
       for (var i = 0; i < maxAttempts; i++) {
