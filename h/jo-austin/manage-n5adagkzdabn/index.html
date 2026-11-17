@@ -490,6 +490,11 @@
       }
     })();
     var SESSION_TOKEN = sessionStorage.getItem('kt_sess') || null;
+
+    // ── Guard — no session means redirect to login immediately ─────
+    if (!SESSION_TOKEN) {
+      window.location.href = 'https://kaributrove.com/manage-login?slug=jo-austin';
+    }
     var SLUG         = 'jo-austin';
     var MANAGE_TOKEN = 'n5adagkzdabn';
     var API          = 'https://kaributrove.com/manage';
@@ -622,6 +627,10 @@
         var json = await res.json();
 
         if (!json.ok) {
+          if (json.auth === false) {
+            window.location.href = 'https://kaributrove.com/manage-login?slug=jo-austin';
+            return;
+          }
           errBan.textContent  = json.error || 'Something went wrong. Please try again.';
           errBan.style.display = 'block';
           btn.disabled = false;
