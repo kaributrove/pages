@@ -54,13 +54,14 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 }
 
 /* ── Base ───────────────────────────────────────────────────── */
-html { font-size: 16px; scroll-behavior: smooth; }
+html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: var(--font-sans);
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ── Typography ─────────────────────────────────────────────── */
@@ -402,7 +403,7 @@ p  { color: var(--text-muted); line-height: 1.7; }
 }
 @media (max-width: 900px) {
   .detail-layout { grid-template-columns: 1fr; }
-  .booking-widget { order: -1; }
+  .booking-widget { order: -1; position: static; }
 }
 
 /* ── Description ────────────────────────────────────────────── */
