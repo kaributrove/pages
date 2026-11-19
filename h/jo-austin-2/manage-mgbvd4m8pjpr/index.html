@@ -355,7 +355,7 @@
   <!-- ── Top nav ── -->
   <nav class="nav">
     <span class="nav-logo">Karibu Trove</span>
-    <a class="nav-view" href="https://pages.kaributrove.com/h/jo-austin-2/" target="_blank" rel="noopener">
+    <a class="nav-view" href="https://tickluxury.com/" target="_blank" rel="noopener">
       View your site ↗
     </a>
   </nav>
@@ -534,18 +534,22 @@
         <div class="card-section-label">Connect a custom domain</div>
         <p class="about-host-note">Replace <code>pages.kaributrove.com/h/jo-austin-2/</code> with your own domain so guests go directly to <strong>yourdomain.com</strong>.</p>
 
+        <div class="dns-connected">
+          ✓ Connected: tickluxury.com
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:10px;">To change your domain, enter a new one below and validate it.</p>
 
-        <div style="margin-top:0">
+        <div style="margin-top:12px">
           <label for="custom-domain-input">Domain <span class="hint">e.g. staysbyjo.com</span></label>
           <div class="domain-input-row">
             <input type="text" id="custom-domain-input" placeholder="yourdomain.com"
-              value="" autocomplete="off" autocapitalize="none" spellcheck="false" />
+              value="tickluxury.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
             <button type="button" class="validate-btn" id="validate-domain-btn">Validate DNS</button>
           </div>
           <div class="domain-status" id="domain-status"></div>
         </div>
 
-        <div class="dns-steps" id="dns-steps" style="display:block">
+        <div class="dns-steps" id="dns-steps" style="display:none">
           <strong>How to point your domain here:</strong>
           <ol>
             <li>Add your domain to <a href="https://cloudflare.com" target="_blank" rel="noopener">Cloudflare</a> (free plan). They will give you two nameserver addresses.</li>
@@ -610,7 +614,7 @@
     var MANAGE_TOKEN = 'mgbvd4m8pjpr';
     var API          = 'https://kaributrove.com/manage';
     var VALIDATE_API = 'https://kaributrove.com/validate-domain';
-    var SAVED_DOMAIN = '';  // domain already in host config
+    var SAVED_DOMAIN = 'tickluxury.com';  // domain already in host config
     var domainValidated = false;             // becomes true after a successful validate call
 
     // ── Per-listing blocked date state ─────────────────────────────
